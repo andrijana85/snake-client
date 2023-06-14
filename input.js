@@ -23,7 +23,14 @@ const setupInput = function(conn) {
     if (data === 'd') {
       connection.write('Move: right');
     }
+    if (data === 'm') {
+      connection.write('Say: Hello there!');
+    }
+    if (data === 'j') {
+      connection.write('Say: How are you today!');
+    }
   };
+  
   stdin.on("data", handleUserInput);
   
   return stdin;
