@@ -10,7 +10,34 @@ const connect = function () {
   conn.on("connect", () => {
     console.log("Connestion established.");
     conn.write("Name: ATZ");
+    let index = 0;
+    const moves = ["Move: up", "Move: up","Move: up","Move: up"];
+    const interval = setInterval(() => {
+      if (index < moves.length) {
+        conn.write(moves[index]);
+        index ++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
   });
+  // setTimeout(() => {
+  //   conn.write("Move: up");
+  // },50);
+  // setTimeout(() => {
+  //   conn.write("Move: up");
+  // },100);
+  // setTimeout(() => {
+  //   conn.write("Move: up");
+  // },150);
+  // setTimeout(() => {
+  //   conn.write("Move: up");
+  // },200);
+  // setTimeout(() => {
+  //   conn.write("Move: up");
+  // },250);
+   
+  
   conn.setEncoding("utf8");
   
   conn.on("data", (data) => {
@@ -20,5 +47,19 @@ const connect = function () {
 
   return conn;
 };
-
+const setupInput = function() {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding("utf8");
+  stdin.resume();
+  const handleUserInput = function(data) {
+    if (data === '\u0003') {
+      process.exit();
+    }
+  };
+  stdin.on("data", handleUserInput);
+  
+  return stdin;
+};
+setupInput();
 module.exports = {connect};
