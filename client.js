@@ -37,7 +37,6 @@ const connect = function() {
   //   conn.write("Move: up");
   // },250);
    
-  
   conn.setEncoding("utf8");
   
   conn.on("data", (data) => {
