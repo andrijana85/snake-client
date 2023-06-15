@@ -1,5 +1,4 @@
 const {MOVE_UP_KEY, MOVE_DOWN_KEY, MOVE_LEFT_KEY, MOVE_RIGHT_KEY} = require('./constants');
-const messages = require('./constants');
 
 let connection;
 
