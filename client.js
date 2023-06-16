@@ -1,30 +1,21 @@
 const net = require("net");
 const { IP, PORT } = require("./constants");
 
+// establishes a connection with the game server
 const connect = function() {
 
   const conn = net.createConnection({
     host: IP,
     port:  PORT
   });
+
   conn.on("connect", () => {
+  // console.log message when the connection is established
     console.log("Connestion established.");
+    // send the initials to the server, upon connection
     conn.write("Name: ATZ");
-
-    let index = 0;
-
-    const moves = ["Move: up", "Move: up","Move: up","Move: up"];
-
-    const interval = setInterval(() => {
-      if (index < moves.length) {
-        conn.write(moves[index]);
-        index ++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50);
   });
-
+  // interpret incoming data as text
   conn.setEncoding("utf8");
   
   conn.on("data", (data) => {
@@ -33,19 +24,5 @@ const connect = function() {
   
   return conn;
 };
-const setupInput = function() {
-  const stdin = process.stdin;
-  stdin.setRawMode(true);
-  stdin.setEncoding("utf8");
-  stdin.resume();
-  const handleUserInput = function(data) {
-    if (data === '\u0003') {
-      process.exit();
-    }
-  };
-  stdin.on("data", handleUserInput);
-  
-  return stdin;
-};
-setupInput();
+// export the connect function using ES6 Shorthand syntax
 module.exports = {connect};

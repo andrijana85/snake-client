@@ -9,33 +9,35 @@ const setupInput = function(conn) {
   stdin.setEncoding("utf8");
   stdin.resume();
 
-  const handleUserInput = function(data) {
-    if (data === '\u0003') {
-      process.exit();
-    }
-    if (data === MOVE_UP_KEY) {
-      connection.write('Move: up');
-    }
-    if (data === MOVE_LEFT_KEY) {
-      connection.write('Move: left');
-    }
-    if (data === MOVE_DOWN_KEY) {
-      connection.write('Move: down');
-    }
-    if (data === MOVE_RIGHT_KEY) {
-      connection.write('Move: right');
-    }
-    if (data === 'm') {
-      connection.write('Say: Hello there!');
-    }
-    if (data === 'j') {
-      connection.write('Say: How are you today!');
-    }
-  };
-  
   stdin.on("data", handleUserInput);
-  
   return stdin;
 };
-setupInput();
+const handleUserInput = function(data) {
+  // check for the ctrl + c input and terminate the game
+  if (data === '\u0003') {
+    process.exit();
+  }
+  // movement commands
+  if (data === MOVE_UP_KEY) {
+    connection.write('Move: up');
+  }
+  if (data === MOVE_LEFT_KEY) {
+    connection.write('Move: left');
+  }
+  if (data === MOVE_DOWN_KEY) {
+    connection.write('Move: down');
+  }
+  if (data === MOVE_RIGHT_KEY) {
+    connection.write('Move: right');
+  }
+  //send canned messages to the server
+  if (data === 'm') {
+    connection.write('Say: Hello there!');
+  }
+  if (data === 'j') {
+    connection.write('Say: How are you today!');
+  }
+};
+  
+// Export the setupInput function
 module.exports = {setupInput};

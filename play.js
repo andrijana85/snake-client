@@ -1,3 +1,4 @@
+//require connect and setupInput functions
 const {connect} = require("./client");
 const {setupInput} = require('./input');
 
